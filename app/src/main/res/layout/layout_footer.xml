@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFB90F"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/profitTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="年总收益：" />
+
+        <TextView
+            android:id="@+id/sumProfit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignRight="@+id/profitTitle"
+            android:layout_marginRight="50dp"
+            android:text="3000" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/profitRatioTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收益比：" />
+
+        <TextView
+            android:id="@+id/profitRatio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignRight="@+id/profitRatioTitle"
+            android:layout_marginRight="30dp"
+            android:text="3000" />
+    </RelativeLayout>
+
+
+</LinearLayout>

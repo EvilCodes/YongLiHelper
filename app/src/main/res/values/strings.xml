@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">YongLiProjection</string>
+    <string-array name="planTitle">
+        <item>投资方案一</item>
+        <item>投资方案二</item>
+        <item>投资方案三</item>
+        <item>投资方案四</item>
+        <item>投资方案五</item>
+    </string-array>
+
+    <string-array name="planDescription">
+        <item>该投资方案采取的是每次取出月红利的做法，期限为一年，每个月复投的都是本金的数额，直到12个月为止。
+            该方案的好处是风险低，回本快但是年收益最少。</item>
+        <item>投资方案二采取的是刚开始取出月红利的做法，回本之后便将月红利复投，直到所规定期限满了为止
+        。采用该方案同样风险较低，而且收益也比较可观。</item>
+        <item>该方案的具体操作情况是前三个月复投，第四个月回本，之后继续将月红利复投。
+            该方案有一定的风险，但是收益很高。</item>
+        <item>该方案采取的是每半个月复投的做法，直到一年期限到了为止，期间不收回本金。风险较高，但是年终收益最高。</item>
+        <item>方案五是投资半个月回现，然后用红利复投。改方案的基本没有任何风险，但是收益是最低的。</item>
+    </string-array>
+    <integer-array name="capital">
+        <item>100</item>
+        <item>500</item>
+        <item>1000</item>
+        <item>3000</item>
+        <item>5000</item>
+        <item>10000</item>
+        <item>20000</item>
+    </integer-array>
+
+    <integer-array name="monthRate">
+        <item>30</item>
+        <item>60</item>
+    </integer-array>
+
+    <string name="month">月份</string>
+    <string name="capital">本金</string>
+    <string name="withdrawal_rate">提现</string>
+    <string name="annual_bonus">年红利</string>
+    <string name="month_bonus">月红利</string>
+</resources>
