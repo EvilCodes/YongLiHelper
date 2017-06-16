@@ -38,4 +38,6 @@
     <string name="withdrawal_rate">提现</string>
     <string name="annual_bonus">年红利</string>
     <string name="month_bonus">月红利</string>
+    <string name="one_month">月</string>
+    <string name="half_month">半/月</string>
 </resources>

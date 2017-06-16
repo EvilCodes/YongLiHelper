@@ -12,8 +12,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -25,6 +28,8 @@ import ucai.cn.yongliprojection.activity.DetailedInformation;
 import ucai.cn.yongliprojection.bean.PlanData;
 
 import static android.R.attr.fraction;
+import static android.R.attr.switchMinWidth;
+import static android.R.attr.theme;
 
 /**
  * Created by Administrator on 2017/5/19 0019.
@@ -34,6 +39,7 @@ public class InvestmentInformation extends Fragment implements View.OnClickListe
     private TextView tvTitle, tvDescription;
     private Button mButton;
     private Spinner spCapital, spMonthRate, spWithdrawalRate, spYearRate;
+    private CheckBox oneMonthChecked, halfMonthChecked;
     private String[] planTitle;
     private String[] planDescription;
     private int[] capitalDataSource;
@@ -43,6 +49,10 @@ public class InvestmentInformation extends Fragment implements View.OnClickListe
     private PlanData planData;
     private int capital, monthRate;
     private int menuId;
+    private boolean isMonthSelected;
+    public static final int ONE_MONTH_SELECTED = 2;
+    public static final int HALF_MONTH_SELECTED = 1;
+    private int monthStatus;
 
     @Nullable
     @Override
@@ -88,9 +98,11 @@ public class InvestmentInformation extends Fragment implements View.OnClickListe
         mButton.setOnClickListener(this);
         spCapital.setOnItemSelectedListener(this);
         spMonthRate.setOnItemSelectedListener(this);
-
+        oneMonthChecked.setOnClickListener(this);
+        halfMonthChecked.setOnClickListener(this);
 
     }
+
 
     private void initAdapter() {
         capitalData = new Integer[7];
@@ -126,18 +138,51 @@ public class InvestmentInformation extends Fragment implements View.OnClickListe
         spWithdrawalRate = (Spinner) view.findViewById(R.id.withdrawal_rate);
         spYearRate = (Spinner) view.findViewById(R.id.year_rate);
         spMonthRate = (Spinner) view.findViewById(R.id.month_rate);
-
+        oneMonthChecked = (CheckBox) view.findViewById(R.id.one_month);
+        halfMonthChecked = (CheckBox) view.findViewById(R.id.half_month);
     }
 
     @Override
     public void onClick(View v) {
-        if (planData != null) {
-            Intent intent = new Intent(getActivity(), DetailedInformation.class);
-            intent.putExtra("planData", planData);
-            intent.putExtra("menu_id", menuId);
-            Log.e("main", "menu_id=" + menuId);
-            context.startActivity(intent);
+
+        switch (v.getId()) {
+            case R.id.generate_excel:
+                Log.e("InvestmentInformation", "oneMonthIsChecked=" + oneMonthChecked.isChecked());
+                checkMonthStatus();
+                if (!isMonthSelected) {
+                    Toast.makeText(getContext(), "请选择利率计算期限", Toast.LENGTH_LONG).show();
+                }
+                if (capital != 0 && monthRate != 0 && isMonthSelected) {
+                    planData = new PlanData(capital, monthRate, 40, 60, monthStatus);
+                    Log.e("InvestmentInformation", "planData=" + planData);
+                    Intent intent = new Intent(getActivity(), DetailedInformation.class);
+                    intent.putExtra("planData", planData);
+                    intent.putExtra("menu_id", menuId);
+                    Log.e("main", "menu_id=" + menuId);
+                    context.startActivity(intent);
+                }
+
+                break;
+            case R.id.one_month:
+                isMonthSelected = true;
+
+                if (halfMonthChecked.isChecked()) {
+                    halfMonthChecked.setChecked(false);
+                }
+
+
+                break;
+            case R.id.half_month:
+                isMonthSelected = true;
+
+                if (oneMonthChecked.isChecked()) {
+                    oneMonthChecked.setChecked(false);
+                }
+                break;
+
         }
+
+
 
     }
 
@@ -154,11 +199,7 @@ public class InvestmentInformation extends Fragment implements View.OnClickListe
                 monthRate = monthRateData[position];
                 break;
         }
-        if (capital != 0 && monthRate != 0) {
 
-            planData = new PlanData(capital, monthRate, 40, 60);
-
-        }
 
     }
 
@@ -166,4 +207,23 @@ public class InvestmentInformation extends Fragment implements View.OnClickListe
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+
+    /**
+     * 使得CheckBox的选择状态单一互斥
+     */
+    private void checkMonthStatus() {
+        if (oneMonthChecked.isChecked()) {
+            monthStatus=ONE_MONTH_SELECTED;
+
+        } else if (halfMonthChecked.isChecked()) {
+            monthStatus=HALF_MONTH_SELECTED;
+
+        } else if (!oneMonthChecked.isChecked() && !halfMonthChecked.isChecked()) {
+            isMonthSelected=false;
+            monthStatus = 0;
+        }
+    }
+
+
 }
